@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sky: #7dd3fc;
+  --color-sky-deep: #38bdf8;
+  --color-sky-soft: #e0f2fe;
+  --color-pink: #f9a8d4;
+  --color-pink-deep: #ec4899;
+  --color-pink-soft: #fce7f3;
+  --color-cream: #fff7fb;
+  --color-ink: #1e293b;
+  --color-ink-muted: #64748b;
+  --font-display: var(--font-display-face), "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-body: var(--font-body-face), "Quicksand", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font-body), sans-serif;
+  color: var(--color-ink);
+  background: linear-gradient(
+    165deg,
+    #e8ddd4 0%,
+    #f5ebe3 40%,
+    #fff7fb 70%,
+    #e0f2fe 100%
+  );
+  background-attachment: fixed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+[type="button"],
+a[href],
+label[for],
+select,
+summary {
+  cursor: pointer;
+}
+
+.flip-page {
+  cursor: grab;
+}
+
+.flip-page--dragging {
+  cursor: grabbing;
+}
+
+.video-inline {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-pink);
+  color: #fff;
+}
+
+.sky-pink-gradient-text {
+  background: linear-gradient(120deg, var(--color-sky-deep), var(--color-pink-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 4px 24px rgba(56, 189, 248, 0.12),
+    0 8px 32px rgba(236, 72, 153, 0.08);
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-soft {
+  animation: float-soft 5s ease-in-out infinite;
+}
+
+.shimmer-text {
+  background-size: 200% auto;
+}
+
+@keyframes gentle-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 24px rgba(56, 189, 248, 0.12),
+      0 8px 32px rgba(236, 72, 153, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 6px 32px rgba(56, 189, 248, 0.22),
+      0 12px 40px rgba(236, 72, 153, 0.18);
+  }
+}
+
+.glass-card-pulse {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+.birthday-scenery {
+  opacity: 0.92;
+}
+
+.birthday-glow {
+  background: radial-gradient(
+    circle,
+    rgba(249, 168, 212, 0.12) 0%,
+    rgba(125, 211, 252, 0.08) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.confetti-piece {
+  box-shadow: 0 1px 2px rgba(30, 41, 59, 0.08);
+}
+
+.reveal-overlay {
+  background: linear-gradient(
+    165deg,
+    #e8ddd4 0%,
+    #f5ebe3 40%,
+    #fff7fb 70%,
+    #e0f2fe 100%
+  );
+}
+
+.bg-music-toggle {
+  cursor: pointer;
+  background: rgba(255, 254, 251, 0.92);
+  border: 1px solid rgba(249, 168, 212, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.reveal-click-me {
+  cursor: pointer;
+  color: var(--color-ink);
+  background: linear-gradient(145deg, #fffef9 0%, #fce7f3 45%, #e0f2fe 100%);
+  border: 1px solid rgba(236, 72, 153, 0.22);
+}
+
+.journal-stage {
+  perspective: 1600px;
+}
+
+.journal-book {
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 1.75rem;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(252, 231, 243, 0.9)
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 16px 48px rgba(236, 72, 153, 0.12),
+    0 8px 24px rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(249, 168, 212, 0.35);
+}
+
+.journal-book::before,
+.journal-book::after {
+  content: "";
+  position: absolute;
+  border-radius: 1.5rem;
+  background: #fffefb;
+  border: 1px solid rgba(203, 213, 225, 0.35);
+  z-index: -1;
+}
+
+.journal-book::before {
+  inset: 0.35rem -0.35rem -0.35rem 0.35rem;
+  opacity: 0.7;
+}
+
+.journal-book::after {
+  inset: 0.65rem -0.65rem -0.65rem 0.65rem;
+  opacity: 0.45;
+}
+
+.journal-flip-host {
+  transform-style: preserve-3d;
+  perspective: 1600px;
+  min-height: min(32rem, calc(100dvh - 7rem));
+  border-radius: 1.35rem;
+  overflow: hidden;
+}
+
+.journal-pages {
+  position: relative;
+  background-color: #fffefb;
+}
+
+.flip-page {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  touch-action: none;
+}
+
+.journal-page-sheet {
+  transform-style: preserve-3d;
+  background-color: #fffefb;
+  background-image:
+    linear-gradient(rgba(236, 72, 153, 0.28) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      transparent 1.65rem,
+      rgba(236, 72, 153, 0.55) 1.7rem,
+      rgba(236, 72, 153, 0.42) 1.75rem,
+      transparent 1.8rem
+    );
+  background-size: 100% 1.625rem, 100% 100%;
+}
+
+.journal-page-content {
+  height: 100%;
+  min-height: min(32rem, calc(100dvh - 7rem));
+}
+
+.journal-page-mark {
+  position: absolute;
+  right: 1.1rem;
+  top: 0.85rem;
+  z-index: 5;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  pointer-events: none;
+}
+
+.memory-card {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow:
+    0 10px 30px rgba(236, 72, 153, 0.14),
+    0 4px 12px rgba(56, 189, 248, 0.12);
+}
