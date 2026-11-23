@@ -37,9 +37,8 @@ export function BackgroundMusic({ armed, videoPageActive = false }: Props) {
     el.muted = muted;
     try {
       await el.play();
-      setPlaying(true);
     } catch {
-      setPlaying(false);
+      /* playing state follows audio element events */
     }
   }, [applyVolume, muted]);
 
@@ -66,7 +65,14 @@ export function BackgroundMusic({ armed, videoPageActive = false }: Props) {
 
   return (
     <>
-      <audio ref={audioRef} src={BACKGROUND_MUSIC_SRC} loop preload="auto" />
+      <audio
+        ref={audioRef}
+        src={BACKGROUND_MUSIC_SRC}
+        loop
+        preload="auto"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+      />
       <button
         type="button"
         onClick={toggleMute}
