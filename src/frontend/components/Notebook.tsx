@@ -31,16 +31,18 @@ const DRAG_RANGE_MULTIPLIER = 1.85;
 function isInteractiveTarget(target: EventTarget | null) {
   return Boolean(
     target &&
-      (target as HTMLElement).closest(
-        "button, a, video, input, textarea, select, [data-interactive]",
-      ),
+    (target as HTMLElement).closest(
+      "button, a, video, input, textarea, select, [data-interactive]"
+    )
   );
 }
 
 export function Notebook({ videos, onVideoPageActive }: Props) {
   const [page, setPage] = useState(0);
   const [peek, setPeek] = useState(0);
-  const [origin, setOrigin] = useState<"left center" | "right center">("left center");
+  const [origin, setOrigin] = useState<"left center" | "right center">(
+    "left center"
+  );
   const [isDragging, setIsDragging] = useState(false);
   const [flipFrozenPage, setFlipFrozenPage] = useState<number | null>(null);
   const flipAnim = useRef<ReturnType<typeof animate> | null>(null);
@@ -61,13 +63,16 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
     (index: number) => {
       if (index === 0) return "cover" as const;
       if (index >= 1 && index <= videos.length) return "video" as const;
-      if (index >= photoPageOffset && index < photoPageOffset + photoSpreads.length) {
+      if (
+        index >= photoPageOffset &&
+        index < photoPageOffset + photoSpreads.length
+      ) {
         return "photo" as const;
       }
       if (index === letterPageIndex) return "letter" as const;
       return "cover" as const;
     },
-    [letterPageIndex, photoPageOffset, videos.length],
+    [letterPageIndex, photoPageOffset, videos.length]
   );
 
   useLayoutEffect(() => {
@@ -108,7 +113,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
       if (kind === "letter") return <LetterPage />;
       return null;
     },
-    [pageKind, photoPageOffset, videos],
+    [pageKind, photoPageOffset, videos]
   );
 
   const clampDrag = useCallback(
@@ -118,7 +123,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
       const limit = width * DRAG_RANGE_MULTIPLIER;
       return Math.max(-limit, Math.min(limit, x));
     },
-    [page, totalPages, width],
+    [page, totalPages, width]
   );
 
   const updatePeek = useCallback(
@@ -133,7 +138,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
         setPeek(page);
       }
     },
-    [page, totalPages],
+    [page, totalPages]
   );
 
   const finishFlip = useCallback(
@@ -152,7 +157,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
         flipAnim.current = null;
       });
     },
-    [dragX, page],
+    [dragX, page]
   );
 
   const releaseFlip = useCallback(
@@ -183,7 +188,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
       });
       setPeek(page);
     },
-    [dragX, finishFlip, page, totalPages, width],
+    [dragX, finishFlip, page, totalPages, width]
   );
 
   const lastMoveX = useRef(0);
@@ -208,7 +213,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
       velocityX.current = 0;
       flipRef.current?.setPointerCapture(e.pointerId);
     },
-    [dragX],
+    [dragX]
   );
 
   const flipSheetPage = flipFrozenPage ?? page;
@@ -229,7 +234,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
       dragX.set(x);
       updatePeek(x);
     },
-    [clampDrag, dragX, updatePeek],
+    [clampDrag, dragX, updatePeek]
   );
 
   const endDrag = useCallback(
@@ -240,7 +245,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
       flipRef.current?.releasePointerCapture(e.pointerId);
       releaseFlip(dragX.get(), velocityX.current);
     },
-    [dragX, releaseFlip],
+    [dragX, releaseFlip]
   );
 
   const onPointerCancel = useCallback(
@@ -251,7 +256,7 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
       animate(dragX, 0, { type: "spring", stiffness: 280, damping: 32 });
       setPeek(page);
     },
-    [dragX, page],
+    [dragX, page]
   );
 
   const isPeeking = peek !== page;
@@ -314,7 +319,9 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
             onPointerUp={endDrag}
             onPointerCancel={onPointerCancel}
           >
-            <div className="journal-page-content">{renderPage(flipSheetPage)}</div>
+            <div className="journal-page-content">
+              {renderPage(flipSheetPage)}
+            </div>
             <PageFoldShadow opacity={shadowOpacity} origin={origin} />
           </motion.div>
 
@@ -335,8 +342,8 @@ export function Notebook({ videos, onVideoPageActive }: Props) {
                     src={videos[activeVideoIndex].src}
                     controls
                     playsInline
-                  preload="auto"
-                />
+                    preload="auto"
+                  />
                   <div className="bg-white px-4 py-3 ring-1 ring-pink/15">
                     <p className="font-display text-xl font-semibold text-ink">
                       {videos[activeVideoIndex].title}
@@ -381,7 +388,9 @@ function CoverPage() {
   return (
     <div className="flex h-full min-h-[28rem] flex-col items-center justify-center px-6 py-10 text-center">
       <h1 className="font-display text-4xl font-semibold leading-tight sm:text-5xl">
-        <span className="sky-pink-gradient-text shimmer-text">Happy Birthday</span>
+        <span className="sky-pink-gradient-text shimmer-text">
+          Happy Birthday
+        </span>
         <br />
         <span className="text-ink">{BIRTHDAY_DISPLAY_NAME}</span>
       </h1>
@@ -464,11 +473,16 @@ function PhotoSpreadPage({ spread }: { spread: PhotoSpread }) {
 
 function VideoPageShell({ video }: { video: ConcertVideo }) {
   return (
-    <div className="flex h-full min-h-[28rem] flex-col items-center justify-center px-4 py-6 sm:px-6" aria-hidden>
+    <div
+      className="flex h-full min-h-[28rem] flex-col items-center justify-center px-4 py-6 sm:px-6"
+      aria-hidden
+    >
       <article className="memory-card w-full max-w-[17rem] overflow-hidden opacity-0">
         <div className="aspect-[3/4] w-full bg-gradient-to-br from-sky-soft to-pink-soft" />
         <div className="bg-white px-4 py-3">
-          <p className="font-display text-xl font-semibold text-ink">{video.title}</p>
+          <p className="font-display text-xl font-semibold text-ink">
+            {video.title}
+          </p>
         </div>
       </article>
     </div>
@@ -478,16 +492,22 @@ function VideoPageShell({ video }: { video: ConcertVideo }) {
 function LetterPage() {
   return (
     <div className="flex h-full min-h-[28rem] flex-col justify-center px-7 py-10 sm:px-10">
-      <p className="font-display text-2xl font-semibold text-ink sm:text-3xl">For {HER_NAME}</p>
-      <p className="mt-1 font-display text-lg text-pink-deep">Love, {COUPLE_NAME}</p>
+      <p className="font-display text-2xl font-semibold text-ink sm:text-3xl">
+        For {HER_NAME}
+      </p>
+      <p className="mt-1 font-display text-lg text-pink-deep">
+        Love, {COUPLE_NAME}
+      </p>
       <div className="mt-6 space-y-4 text-sm leading-relaxed text-ink-muted sm:text-base">
         <p>
-          Happy birthday, my love. I still think about that night — you laughing, singing back every
-          line, dancing like the whole room was just for us.
+          Happy birthday, wamby ko. I still think about that night — you
+          laughing, singing back every line, dancing like the whole room was
+          just for us.
         </p>
         <p>
-          You make ordinary days feel like something out of a song. I&apos;m grateful for you, proud
-          of you, and so excited to celebrate you today and every day after.
+          You make ordinary days feel like something out of a song. I&apos;m
+          grateful for you, proud of you, and so excited to celebrate you today
+          and every day after.
         </p>
         <p className="font-medium text-pink-deep">
           — always, <NicknamePulse />
