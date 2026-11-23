@@ -399,26 +399,28 @@ function PhotoSpreadPage({ spread }: { spread: PhotoSpread }) {
     <div
       className={
         isQuad
-          ? "flex h-full min-h-0 flex-col items-center gap-3 overflow-y-auto px-4 pb-5 pt-8 sm:px-6"
-          : "flex h-full min-h-[28rem] flex-col items-center justify-center px-4 py-6 sm:px-6"
+          ? "pointer-events-none flex h-full min-h-0 touch-none select-none flex-col items-center justify-start gap-2 overflow-hidden px-3 pb-4 pt-6 sm:px-5"
+          : "pointer-events-none flex h-full min-h-[28rem] touch-none select-none flex-col items-center justify-center px-4 py-6 sm:px-6"
       }
     >
       {spread.title && (
         <p
-          className={`text-center font-display text-xl font-semibold text-ink sm:text-2xl ${isQuad ? "shrink-0" : "mb-4"}`}
+          className={`text-center font-display font-semibold text-ink ${isQuad ? "shrink-0 text-lg sm:text-xl" : "mb-4 text-xl sm:text-2xl"}`}
         >
           {spread.title}
         </p>
       )}
       {isQuad ? (
-        <div className="flex w-full max-w-[14.5rem] flex-col gap-2">
+        <div className="grid w-full max-w-[15rem] shrink-0 grid-cols-2 gap-1.5 sm:gap-2">
           {spread.images.map((img) => (
             <figure key={img.src} className="memory-card overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={img.src}
                 alt={img.alt}
-                className="aspect-[5/4] w-full object-cover"
+                loading="lazy"
+                decoding="async"
+                className="aspect-square w-full object-cover"
               />
             </figure>
           ))}
@@ -451,7 +453,7 @@ function PhotoSpreadPage({ spread }: { spread: PhotoSpread }) {
       )}
       {spread.caption && (
         <p
-          className={`max-w-xs shrink-0 text-center text-sm text-ink-muted sm:max-w-sm sm:text-base ${isQuad ? "mt-1 px-1" : "mt-4"}`}
+          className={`shrink-0 text-center text-ink-muted ${isQuad ? "max-w-[16rem] px-1 text-xs leading-snug sm:text-sm" : "mt-4 max-w-xs text-sm sm:max-w-sm sm:text-base"}`}
         >
           {spread.caption}
         </p>

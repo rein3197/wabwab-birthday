@@ -34,7 +34,7 @@ export function BirthdayPage() {
           opacity: revealed ? 1 : 0,
           pointerEvents: revealed ? "auto" : "none",
         }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.25 }}
       >
         {revealed && (
           <Notebook videos={concertVideos} onVideoPageActive={setVideoPageActive} />
